@@ -51,11 +51,6 @@ footer {
     height:20px;
 }
 
-/* HOME*/
-
-
-
-
 /* CONTROLE DE ESTOQUE */
 
 table {
@@ -70,4 +65,53 @@ td {
 
 .capa-livro {
     height:160px;
+}
+
+/* ADICIONAR PRODUTO */
+
+form {
+    background-color: #F6F7F8;
+    border: 1px solid #D6D9DC;
+    width: 35%;
+    border-radius: 3px;
+    padding: 50px 50px 5px 50px;
+}
+
+label {
+    background-color: #F6F7F8;
+    margin-bottom: 10px;
+    color: #5D6063;
+    font-weight: 500;
+}
+
+.form-item {
+    background-color: #F6F7F8;
+    margin-bottom: 40px;
+    display:flex;
+    flex-direction: column;
+}
+
+.form-item input {
+    border: 1px solid #D6D9DC;
+    border-radius: 3px;
+    width: 90%;
+    padding: 7px;
+    font-size: 14px;
+}
+
+.form-item button {
+    font-size: 16px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #5995DA;
+    border: none;
+    border-radius: 3px;
+    width: 50%;
+    padding: 10px 40px;
+    cursor: pointer;
+}
+
+/* Lista de funcionários */
+ul {
+    margin: 10px 0 0 50px;
 }
