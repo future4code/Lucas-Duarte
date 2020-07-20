@@ -1,0 +1,131 @@
+* {
+	margin:0;
+    padding:0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.menu {
+    border:0.1em dotted #E1E0E2;
+    margin: 0.2em;
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    width:70px;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.7em;
+}
+
+p {
+    font-weight: 10;
+    font-size: 1.2em;
+}
+
+header {
+    /*border: 3px solid #E1E0E2;*/
+    width:100%
+    margin: 10em;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    }
+
+.foto-lucas {
+    width: 210px;
+}
+
+.barra-status {
+    margin: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.infoicone {
+    width: 15em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.icone {
+    height: 3em;
+}
+
+.secao-apresentacao {
+    background-color: #897384;
+    color: white;
+    text-align: center;
+    width:100%;
+    height: 20em;
+
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+}
+
+.texto-descricao {
+    width: 60%;
+    height: 40%;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items:center;
+}
+
+.secao-jobs-school {
+    text-align: center;
+    width:100%;
+    height: 35em;
+    display: flex;
+}
+
+.jobs-texto-logos {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items:center;
+}
+
+.school-texto-logos {
+    border-left: 1em double #E1E0E2;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items:center;
+}
+
+.logo-empresa {
+    width: 15em;
+}
+
+.logo-escola {
+    width: 10em;
+}
+
+footer {
+    background-color: #E1E0E2;
+    height: 4em;
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.social-icon{
+    height: 2em;
+}
