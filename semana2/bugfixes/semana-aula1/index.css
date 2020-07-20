@@ -89,6 +89,13 @@ div>p:first-child {
   *  ESTILOS COMPRAR 
   *
   **/
+  
+input {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 2px solid gray;
+}
 
 div:nth-child(2),
 div:last-child {
