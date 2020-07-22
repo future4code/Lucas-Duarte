@@ -1,0 +1,83 @@
+/*Exercício1*/
+justify-content: flex-end;
+
+/*Exercício2*/
+justify-content: center;
+
+/*Exercício3*/
+justify-content: space-around;
+
+/*Exercício4*/
+justify-content: space-between;
+
+/*Exercício5*/
+align-items: flex-end;
+
+/*Exercício6*/
+justify-content: center;
+align-items: center;
+
+/*Exercício7*/
+justify-content: space-around;
+align-items: flex-end;
+
+/*Exercício8*/
+flex-direction: row-reverse;
+
+/*Exercício9*/
+flex-direction:column;
+
+/*Exercício10*/
+flex-direction: row-reverse;
+justify-content: left;
+
+/*Exercício11*/
+flex-direction: column;
+justify-content: flex-end;
+
+/*Exercício12*/
+flex-direction: column-reverse;
+justify-content: space-between
+
+/*Exercício13*/
+flex-direction: row-reverse;
+justify-content: center;
+align-items: flex-end;
+
+/*Exercício14*/
+order: 3;
+
+/*Exercício15*/
+order:-1;
+
+/*Exercício16*/
+align-self:flex-end;
+
+/*Exercício17*/
+align-self: flex-end;
+order: 1;
+
+/*Exercício18*/
+flex-wrap: wrap;
+
+/*Exercício19*/
+flex-direction: column;
+flex-wrap: wrap;
+
+/*Exercício20*/
+flex-flow: column wrap;
+
+/*Exercício21*/
+align-content: flex-start;
+
+/*Exercício22*/
+align-content: flex-end;
+
+/*Exercício23*/
+flex-direction: column-reverse;
+align-content: center;
+
+/*Exercício24*/
+flex-flow: column-reverse wrap-reverse;
+justify-content:center;
+align-content:space-between;
