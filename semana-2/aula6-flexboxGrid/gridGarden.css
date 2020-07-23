@@ -1,0 +1,85 @@
+/*Exercício1*/
+grid-column-start:3;
+
+/*Exercício2*/
+grid-column-start:5;
+
+/*Exercício3*/
+grid-column-end:4;
+
+/*Exercício4*/
+grid-column-end:2;
+
+/*Exercício5*/
+grid-column-end:5;
+
+/*Exercício6*/
+grid-column-start: -3;
+
+/*Exercício7*/
+grid-column-end: span 2;
+
+/*Exercício8*/
+grid-column-end: span 5;
+
+/*Exercício9*/
+grid-column-start: span 3;
+
+/*Exercício10*/
+grid-column: 4/6;
+
+/*Exercício11*/
+grid-column: 2 /span 3;
+
+/*Exercício12*/
+grid-row-start: 3;
+
+/*Exercício13*/
+grid-row: 3/6;
+
+/*Exercício14*/
+grid-column: 2;
+grid-row:5;
+
+/*Exercício15*/
+grid-column: 2/6;
+grid-row: 1/6;
+
+/*Exercício16*/
+grid-area: 1 / 2 / 4 / 6 ;
+
+/*Exercício17*/
+grid-area: 2 / 3 / 5 / 6;
+
+/*Exercício18*/
+order:3;
+
+/*Exercício19*/
+order: -1;
+
+/*Exercício20*/
+grid-template-columns: 50% 50%;
+
+/*Exercício21*/
+grid-template-columns: repeat(8, 12.5%);
+
+/*Exercício22*/
+grid-template-columns: 100px 3em 40%;
+
+/*Exercício23*/
+grid-template-columns: 1fr 5fr;
+
+/*Exercício24*/
+grid-template-columns: 50px 1fr 1fr 1fr 50px;
+
+/*Exercício25*/
+grid-template-columns: 75px 3fr 2fr;
+
+/*Exercício26*/
+grid-template-rows: 50px 0fr 0fr 0fr 1fr;
+
+/*Exercício27*/
+grid-template: 60% 40% / 200px;
+
+/*Exercício28*/
+grid-template: 1fr 50px / 20% 80%;
