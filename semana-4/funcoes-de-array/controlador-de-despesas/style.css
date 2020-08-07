@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    margin-top: 1em;
+    align-self: center;
+}
+
+#formulario-cadastro {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+select {
+    height: 2.4em;
+    font-size: 0.8em;
+    width: 250px;
+    border: 1px solid #B7C6CF;
+}
+
+label {
+    margin-top: 0.8em;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 90%;
+    border: 0;
+    background: #1D61DD;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 1em;
+}
+
+hr {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+/* FILTROS */
+
+#secao-despesas {
+    display: flex;
+    align-items: flex-start;
+    width: 100vw;
+}
+
+#div-filtro {
+    display: flex;
+    padding-left: 2em;
+}
+
+#formulario-filtro {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#formulario-filtro > input, select {
+    margin-right: 1em;
+}
+
+#botao-limpar-filtros {
+    background: #B7C6CF;
+    color: #57656E;
+}
+
+ul {
+    margin-left: 3em;
+}
