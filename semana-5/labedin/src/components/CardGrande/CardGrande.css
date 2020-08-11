@@ -1,0 +1,24 @@
+.bigcard-container {
+    display: flex;
+    align-items: center;
+    box-shadow: 1px  1px 1px 1px #DFDCDC;
+    padding: 20px 10px;
+    margin-bottom: 10px;
+    height: 10em;
+}
+
+.bigcard-container > img {
+    width: 70px;
+    margin-right: 2em;
+    border-radius: 5%;
+}
+
+.bigcard-container h4 {
+    margin-bottom: 15px;
+}
+
+.bigcard-container > div {
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-start;
+}

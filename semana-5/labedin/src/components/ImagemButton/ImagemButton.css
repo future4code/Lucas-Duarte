@@ -1,0 +1,19 @@
+.image-button-container {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5em;
+    margin-bottom: 2em;
+    text-decoration: none;
+}
+
+.image-button-container > img {
+    width: 2em;
+    margin-right: 0.5em;
+    transition: transform 3s;
+}
+
+.image-button-container > img:hover {
+    width: 2em;
+    margin-right: 0.5em;
+    transform: scale(1.1); 
+}

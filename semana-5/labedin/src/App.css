@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: #444444;
+}
+
+header {
+  width: 100%;
+  background-color:#FBFBFB;
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+}
+
+.logo {
+  height: 3em;
+}
+
+.page-section-container {
+  width: 40vw;
+  margin: 10px 0;
+}
+
+.card-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  height: 30vh;
+}
+
+.card-profile img {
+  height:25vh;
+  margin-right: 10px;
+  border-radius: 50%;
+  transition: transform 3s;
+}
+
+.card-profile img:hover {
+  transform: scale(1.1); 
+}
+
+.card-profile h2 {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+}
+
+.profile-info {
+  margin-left: 4em;
+}
+
+.cards-pequenos {
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+}
+
+h3 {
+  display: flex;
+  justify-content: left;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: #444444;
+}
+
+.social-icon-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+footer {
+  width: 100%;
+  background-color:#FBFBFB;
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  color: #444444;
+}
