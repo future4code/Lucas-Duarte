@@ -1,0 +1,21 @@
+strong {
+    color: #102436;
+}
+.smallcard-container {
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    box-shadow: 1px  1px 1px 1px #DFDCDC;
+    padding: 20px 10px;
+    margin-bottom: 10px;
+    height: 4em;
+}
+
+.smallcard-container > img {
+    width: 1.5em;
+}
+
+.smallcard-container p {
+    margin-left: 0.7em;
+}
+
