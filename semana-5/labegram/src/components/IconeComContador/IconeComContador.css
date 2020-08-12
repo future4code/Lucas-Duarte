@@ -1,0 +1,11 @@
+.icon-container {
+    display: flex;
+}
+
+.icon-container img {
+    margin-right: 5px;
+}
+
+p {
+    width: 1em;
+}
