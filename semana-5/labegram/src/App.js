@@ -23,7 +23,7 @@ const Header = styled.header`
 `
 
 const Logo = styled.img`
-  height: 3em
+  height: 3em;
 `
 
 const AppContainer = styled.div`
