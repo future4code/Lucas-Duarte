@@ -1,8 +1,14 @@
 import React from 'react';
 import axios from 'axios'
-import {AppContainer} from "./Appstyle"
+import {AppContainer, Header, Logotype, Subtitle, Highlight} from "./Appstyle"
+import {FormContainer, FormText, Input, SendButton} from "./Appstyle"
+//importa componente lista
+import {ListContainer, ListItem, UserIcon, UserName, DeleteButton} from "./Appstyle"
+import staricon from './img/star-icon.svg'
+
 
 import UsersList from './components/UsersList'
+import logo from './img/logo.svg'
 
 class App extends React.Component {
 
@@ -17,7 +23,7 @@ getAllUsers = () => {
   const request = axios.get(
       "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users",
       { headers: {
-        Authorization: "fulano-dasilva-jackson"
+        Authorization: "lucas-duarte-jackson"
       }}
   )
 
@@ -25,8 +31,8 @@ getAllUsers = () => {
   .then((response) => {
       this.setState({allUsers: response.data})
   })
-  .catch((error) => {
-      console.log("ERRO NA GETALLUSERS",error)
+  .catch((error) => {  
+    console.log("ERRO NA GETALLUSERS",error)
   })
 }
 
@@ -51,12 +57,12 @@ createUser = () => {
   "https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users",
   body,
    {headers: {
-      Authorization: "fulano-dasilva-jackson"
+      Authorization: "lucas-duarte-jackson"
     }}
   )
 
   request.then((response) => {
-    alert(`O usuário ${this.state.name} com email ${this.state.email} foi criado`)
+    alert(`Bem-vindx, ${this.state.name}! Agora você é VIP!`)
     this.getAllUsers()
     this.setState({ name: "", email: ""})
     console.log(response.data.result)
@@ -75,14 +81,14 @@ deleteUser = (id) => {
     `https://us-central1-labenu-apis.cloudfunctions.net/labenusers/users/${id}`,
     {
       headers: {
-        Authorization: "fulano-dasilva-jackson"
+        Authorization: "lucas-duarte-jackson"
       }
     }
   )
 
     requestdelete
     .then((response) => {
-      alert(`O usuário ${this.state.name} foi deletado`)
+      alert(`Obrigado pela denúncia! Essa pessoa foi deletada da lista VIP`)
       this.getAllUsers()
       console.log("deu certo", response)
     })
@@ -104,20 +110,29 @@ render() {
 
   return (
     <AppContainer>
-      <input value = {this.state.name} onChange={onChangeInputName} placeholder="Nome"/>
-      <input value = {this.state.email} onChange={onChangeInputEmail} placeholder="Email" onKeyDown={this.onEnter} />
-      <button onClick = {this.createUser}> Enviar</button>
+      <Header>
+        <Logotype src={logo} />
+        <Subtitle>Cansado de não ser ninguém? <Highlight>Seja VIP!</Highlight></Subtitle>
+      </Header>
+      <FormContainer>
+      <FormText>Faça seu cadastro e entre agora mesmo para uma seleta lista de <Highlight>pessoas VIP</Highlight>:</FormText>
+      <Input value = {this.state.name} type="text" onChange={onChangeInputName} placeholder="Seu nome completo"/>
+      <Input value = {this.state.email} type="email" onChange={onChangeInputEmail} placeholder="Seu email" onKeyDown={this.onEnter} />
+      <SendButton onClick = {this.createUser}>Quero ser VIP!</SendButton>
+      </FormContainer>
 
-      <div>
-        <h3>Usuários:</h3>
+      <ListContainer>
+        <Subtitle>Lista de gente <Highlight>VIP</Highlight>:</Subtitle>
         {this.state.allUsers.map ( (item) => {
                     return (
-                    <div>
-                    <p> {item.name} - <button onClick = {() => this.deleteUser(item.id)} >deletar</button></p>
-                    </div>
+                    <ListItem>
+                    <UserIcon src={staricon} />
+                    <UserName> {item.name}</UserName>
+                    <DeleteButton onClick = {() => this.deleteUser(item.id)}>(Essa pessoa não é VIP? Denuncie!)</DeleteButton>
+                    </ListItem>
                     )
                 })}
-      </div>
+      </ListContainer >
     </AppContainer>
   )
 }
