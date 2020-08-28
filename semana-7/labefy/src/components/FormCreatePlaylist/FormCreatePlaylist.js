@@ -34,7 +34,7 @@ class FormCreatePlaylist extends React.Component {
           this.setState({playlistName:""})
         })
         .catch ( (error) => {
-          console.log("Erro na createPlaylist", error)
+          alert("Não conseguimos criar a playlist. Certifique-se de que já não existe uma playlist com esse nome.")
         })
     }
 

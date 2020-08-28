@@ -49,6 +49,7 @@ export const ButtonAddPlaylist = styled.button`
 
     transition: transform 3s;
     &:hover {
+        cursor: pointer;
         transform: scale(1.06);
         background-color: #E87708;
     }

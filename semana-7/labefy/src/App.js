@@ -3,12 +3,20 @@ import axios from 'axios';
 
 // style
 import {AppContainer, Header, Logo, PlaylistsContainer} from './App-style'
-import {PlaylistsList, Title, PlaylistName} from './App-style'
+import {PlaylistsList, Title, PlaylistName, OpenIcon, PlaylistTitle} from './App-style'
 
-//
+//style of playlist
 import {SinglePlaylist, PlaylistClosed, OpenDetailsButton} from './App-style'
-
 import {DeleteContainer, DeleteIcon, DeleteLabel} from './App-style'
+// style of playlist details
+import {DetailsContainer} from './App-style'
+import {EmptyPlaylistContainer, AddTrackLabel, Player, TrackContainer, TrackIcon} from './App-style'
+
+//style do form de adicionar música:
+import {AddTrackEditor, EditorTitle, InputAndLabel, LabelAddTrack, InputAddTrack, FormFirstRow, AddButton, Tip} from './App-style'
+
+//style do footer
+import {Footer, Credit, LabenuLogo} from './App-style'
 
 // componentes
 import FormCreatePlaylist from './components/FormCreatePlaylist/FormCreatePlaylist'
@@ -16,6 +24,9 @@ import FormCreatePlaylist from './components/FormCreatePlaylist/FormCreatePlayli
 // images
 import labefy from './components/img/labefy.png'
 import deleteicon from './components/img/trash.svg'
+import arrowdown from './components/img/arrow-down.svg'
+import songicon from './components/img/track-icon.svg'
+import labenu from './components/img/labenu.png'
 
 const axiosConfig = {
   headers: {
@@ -34,7 +45,7 @@ export class App extends React.Component {
     selectedPlaylistId: "",
     addTrackName: "",
     addTrackArtist: "",
-    addTrackURL: "",
+    addTrackURL: "http://spoti4.future4.com.br/1.mp3",
 }
 
 getAllPlaylists = () => {
@@ -66,6 +77,7 @@ getPlaylistTracks = (playlistId) => {
       console.log(response.data.result.tracks)
       this.setState({
           showPlaylistDetails:true,
+          // showAddTrackEditor: false,
           selectedPlaylistId: playlistId,
           numberOfTracks: response.data.result.quantity,
           tracks: response.data.result.tracks,
@@ -75,6 +87,13 @@ getPlaylistTracks = (playlistId) => {
       console.log("Erro no getPlaylistTracks", error)
   })
 }
+
+onEnterAddTrack = (event) => {
+  if(this.state.addTrackArtist !== "" && this.state.addTrackName !== "" && this.state.addTrackURL !== "" && event.key === "Enter") {
+    this.addTrackToPlaylist(this.state.selectedPlaylistId)
+  }
+}
+
 
 addTrackToPlaylist = (playlistId) => {
 
@@ -90,11 +109,14 @@ addTrackToPlaylist = (playlistId) => {
       this.setState({
         showAddTrackEditor:true,
         selectedPlaylistId: playlistId,
+        addTrackName: "",
+        addTrackArtist: "",
+        addTrackURL: "http://spoti4.future4.com.br/1.mp3",    
       })
       this.getPlaylistTracks()
   })
   .catch ( (error) => {
-      console.log("erro na addTracktoPlaylist", error)
+      alert("Algo deu errado. Tente novamente.")
   })
 }
 
@@ -110,6 +132,7 @@ deletePlaylist = (playlistId) => {
       })
       .catch ( (error) => {
           console.log(error)
+          alert("Algo deu errado. Tente novamente.")
       })
   }
 
@@ -121,22 +144,31 @@ deletePlaylist = (playlistId) => {
     const playListDetails = () => {
       if (this.state.showPlaylistDetails)  {
           return (
-              <div>
-                  <p>{this.state.numberOfTracks} músicas</p>
-                  <button onClick = {() => showAddTrackEditor(this.state.selectedPlaylistId)}>Adicionar música</button>
+              <DetailsContainer>
+                {(this.state.numberOfTracks === 0)? <EmptyPlaylistContainer><p>Esta playlist está vazia.<AddTrackLabel onClick = {() => showAddTrackEditor(this.state.selectedPlaylistId)}>Adicione músicas!</AddTrackLabel></p>                {addTrackEditor()}</EmptyPlaylistContainer>:
+                <div>
+                 {(this.state.numberOfTracks === 1)? <p>Esta playlist tem apenas {this.state.numberOfTracks} música.</p>:                   <p>Esta playlist tem <strong>{this.state.numberOfTracks}</strong> músicas.</p>}
+                <p>{this.state.tracks.map ( (track) => {
+                  return (
+                      <div>
+                      <TrackContainer>
+                      <TrackIcon src={songicon}/>
+                      <p><strong>{track.artist}</strong> - {track.name}</p>
+                      </TrackContainer>
+                      <Player controls>
+                          <source src={track.url} type="audio/ogg"/>
+                      Your browser does not support the audio element.
+                      </Player>
+                      </div>
+                  )
+              })} </p>
+              <AddTrackLabel onClick = {() => showAddTrackEditor(this.state.selectedPlaylistId)}>Adicione + músicas</AddTrackLabel>
                   {addTrackEditor()}
-                  <p>Músicas: {this.state.tracks.map ( (track) => {
-                      return (
-                          <div>
-                          <p>{track.artist} - {track.name}</p>
-                          <audio controls>
-                              <source src={track.url} type="audio/ogg"/>
-                          Your browser does not support the audio element.
-                          </audio>
-                          </div>
-                      )
-                  })}</p>
-              </div>
+                </div>
+              }
+                  
+                  
+              </DetailsContainer>
           )
       }
       } 
@@ -155,7 +187,7 @@ deletePlaylist = (playlistId) => {
 
   const showAddTrackEditor = (itemId) => {
       this.setState({
-          showAddTrackEditor:true,
+          showAddTrackEditor:!this.state.showAddTrackEditor,
           selectedPlaylistId: itemId,
       })
   }
@@ -163,12 +195,23 @@ deletePlaylist = (playlistId) => {
   const addTrackEditor = () => {
       if (this.state.showAddTrackEditor) {
           return (
-              <div>
-                  <input placeholder="Nome da música" value={this.state.addTrackName} onChange={onChangeAddName}/>
-                  <input placeholder="Nome do artista/banda" value ={this.state.addTrackArtist} onChange={onChangeAddArtist}/>
-                  <input placeholder="URL" value={this.state.addTrackURL} onChange={onChangeAddURL}/>
-                  <button onClick ={() => this.addTrackToPlaylist(this.state.selectedPlaylistId)}>Adicionar</button>
-              </div>
+              <AddTrackEditor>
+                  <EditorTitle>Adicione uma música:</EditorTitle>
+                  <InputAndLabel>
+                  <LabelAddTrack>Nome da música</LabelAddTrack>
+                  <InputAddTrack placeholder="Nome da música" value={this.state.addTrackName} onChange={onChangeAddName}/>
+                  </InputAndLabel>
+                  <InputAndLabel>
+                  <LabelAddTrack>Artista/Banda</LabelAddTrack>
+                  <InputAddTrack placeholder="Nome do artista/banda" value ={this.state.addTrackArtist} onChange={onChangeAddArtist}/>
+                  </InputAndLabel>
+                  <InputAndLabel type={"url"}>
+                  <LabelAddTrack>URL da música</LabelAddTrack>
+                  <InputAddTrack placeholder="URL" value={this.state.addTrackURL} onChange={onChangeAddURL} onKeyDown={this.onEnterAddTrack}/>
+                  <Tip>Escolha entre 100 músicas selecionadas, alterando o número nessa URL: <br/><strong><em>http://spoti4.future4.com.br/1.mp3</em></strong></Tip>
+                  </InputAndLabel>
+                  <AddButton onClick ={() => this.addTrackToPlaylist(this.state.selectedPlaylistId)}>Adicionar</AddButton>
+              </AddTrackEditor>
           )
       }
   }
@@ -186,8 +229,11 @@ deletePlaylist = (playlistId) => {
                     return (
                         <SinglePlaylist onClick={() => this.getPlaylistTracks(item.id)}>
                             <PlaylistClosed>
+                            <PlaylistTitle>
+                            <OpenIcon src={arrowdown}/>
                             <PlaylistName>{item.name}</PlaylistName>
-                            <OpenDetailsButton onClick={() => this.getPlaylistTracks(item.id)}>Abrir playlist</OpenDetailsButton>                            
+                            </PlaylistTitle>
+                            {/* <OpenDetailsButton onClick={() => this.getPlaylistTracks(item.id)}>Abrir playlist</OpenDetailsButton>                             */}
                             <DeleteContainer>
                             <DeleteLabel onClick={() => this.deletePlaylist(item.id)}>Deletar playlist</DeleteLabel>
                             <DeleteIcon src={deleteicon} onClick={() => this.deletePlaylist(item.id)}/>
@@ -199,6 +245,10 @@ deletePlaylist = (playlistId) => {
                 })}
 
             </PlaylistsContainer>
+          <Footer>
+          <Credit>Labefy foi criado por <strong>@dolucasduarte</strong> a partir de uma API da Labenu!</Credit>
+          <LabenuLogo src={labenu}/>
+          </Footer>
       </AppContainer>
     );
   }
