@@ -10,6 +10,12 @@ import useRequestData from '../hooks/useRequestData';
 
 const HomePageContainer = styled.div`
     display: flex;
+    min-height: 85vh;
+    
+    /* background-image: url("https://blenderartists.org/uploads/default/original/4X/7/e/2/7e2d7bea4ac21388c4a96e1371f375c4ce00094b.jpg");
+    background-position: center;
+    background-size:cover; */
+
 `
 
 const TripCard = styled.div`
@@ -29,9 +35,9 @@ const HomePage = () => {
 
     if (!trips) {
         return (
-            <div>
+            <HomePageContainer>
                     carregando..
-            </div>
+            </HomePageContainer>
         )
     }
 
