@@ -13,6 +13,7 @@ const ApplyToTripContainer = styled.div`
     display: flex;
     flex-direction: column;
     width:30%;
+    min-height: 85vh;
 `
 
 const ApplyToTripPage = () => {
