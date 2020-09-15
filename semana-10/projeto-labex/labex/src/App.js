@@ -1,10 +1,15 @@
 import React from 'react';
+import Router from './router/Router'
+
+import Header from './components/Header'
 
 
 function App() {
+
   return (
   <div>
-    oi
+    <Header/>
+    <Router/>
   </div>
   );
 }
