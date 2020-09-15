@@ -1,98 +1,97 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import styled from 'styled-components'
 
+//Componentes
+import AllMatches from './assets/components/AllMatches'
+import ProfileCard from './assets/components/ProfileCard'
 
-const CardProfile = styled.div`
-  width: 50%;
-`
+// style
+import {AppContainer} from './App-style'
+import {Header, LogoImage, PageContainer, Footer} from './App-style'
+import {ClearButton, ClearLabel, ClearIcon} from './App-style'
 
-const ProfilePic = styled.img`
-  width: 50%;
-`
+//images
+import logo from './assets/img/labelove.svg'
+import resetIcon from './assets/img/reset.svg'
+
+//Animation imports:
+import loadingAnimation from './assets/img/heartbeating.json'
+
 
 function App() {
 
-  const [profile, setProfile] = useState('')
+  // ferramentas pra conectar com a API:
 
-  useEffect(() => {
-    getProfileToChoose()
-  }, [])
+  const baseUrl = "https://us-central1-missao-newton.cloudfunctions.net/astroMatch/"
 
-  const getProfileToChoose = async () => {
+  const id = "lucsduart"
 
-    try {
-      const response = await axios.get("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/lucass/person")
-      console.log(response.data.profile)
-      setProfile(response.data.profile)
-    }
-    catch (error) {
-      console.log("Erro getProfile:", error.response)
-    }
+  // Hook e funções de trocar de página:
 
+  const [currentPage, setCurrentPage] = useState('App')
+
+  const goToMatches = () => {
+    setCurrentPage("Matches")
   }
 
-
-  const choosePerson = async () => {
-
-    const body = {
-      id: profile.id,
-	    choice: true
-    }
-
-    try {
-      const response = await axios.post("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/lucass/choose-person", body)
-    }
-
-    catch (error) {
-      console.log("Erro:", error.response)
-    }
-
-    getProfileToChoose()
-  }
-
-  const getMatches = async () => {
-
-    try {
-        const response = await axios.get("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/lucass/matches")
-        
-        console.log("Matches:", response.data)
-    }
-    catch (error) {
-        console.log("Erro:", error)
-    }
+  const goToApp = () => {
+    setCurrentPage("App")
 }
+
+  // Função de limpar matches:
 
   const clearAll = async () => {
 
     try {
-      const response = await axios.put("https://us-central1-missao-newton.cloudfunctions.net/astroMatch/lucass/clear")
+      const response = await axios.put(`${baseUrl}${id}/clear`)
 
-      console.log("Limpou!", response)
+      alert("Seu histórico de matches foi limpo!")
     }
     catch (error){
       console.log("Erro na limpeza:", error)
     }
   }
- 
-
 
 
   return (
-    <div>
-        <button onClick={getMatches}> Ver matches</button>
-      <CardProfile>
-       <ProfilePic src={profile.photo}/> 
-       <p>{profile.name}</p>
-       <p>Idade: {profile.age}</p> 
-       <p>Bio: {profile.bio}</p> 
-      </CardProfile>
-      <button onClick={getProfileToChoose}>Não curti</button>
-      <button onClick={choosePerson}>Dar like</button>
-      <br/>
-      <button onClick={clearAll}> Limpar swipes e matches</button>
+    <AppContainer>
+      <Header>
+        <LogoImage onClick={goToApp} src={logo}/>
+      </Header>
+      {currentPage == "App" && 
 
-    </div>
+      <PageContainer>
+
+        <ProfileCard
+        baseUrl={baseUrl}
+        id={id}
+        goToMatches={goToMatches}
+        />
+
+        <ClearButton onClick={clearAll}>
+          <ClearLabel>Limpar matches</ClearLabel>
+          <ClearIcon src={resetIcon}/>
+        </ClearButton>
+        
+      </PageContainer>
+
+
+      }
+
+      {currentPage == "Matches" && 
+      <PageContainer>
+      <AllMatches
+      baseUrl={baseUrl}
+      id={id}
+      goToApp={goToApp}
+      />
+      </PageContainer>
+      }
+    
+      <Footer>
+      Criado por <strong>@dolucasduarte</strong> na semana de  7/set/2020. 
+      </Footer>
+    </AppContainer>
   );
 }
 
