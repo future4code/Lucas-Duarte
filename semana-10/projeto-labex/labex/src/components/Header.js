@@ -3,17 +3,13 @@ import styled from 'styled-components'
 
 //routes
 import { useHistory } from "react-router-dom";
-import {goToLoginPage} from '../router/goToPages'
+import {goToHomePage, goToLoginPage, goToSignUpPage, goToAdminPage} from '../router/goToPages'
 
 import logo from '../img/logo.png'
 
 const HeaderContainer = styled.div`
-  /* background-image: url("https://blenderartists.org/uploads/default/original/4X/7/e/2/7e2d7bea4ac21388c4a96e1371f375c4ce00094b.jpg");
-  background-position: center;
-  background-size:cover; */
-
+  width: 100vw;
   height: 15vh;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -21,49 +17,70 @@ const HeaderContainer = styled.div`
 
 const Logo = styled.img`
   height: 2.5em;
-  margin-left: 1em;
+  padding-left: 3.2em;
+  padding-bottom: 1em;
   align-self: center;
-`
-
-const Button = styled.p`
-  display: flex;
-  align-items: center;
-  /* height: 2.5em;
-  width: 10em;
-  background-color: #C3B0C1;
-  border: none;
-  border-radius: 3em; */
-
-  background-color: transparent;
-  border:none;
-
-
-  color: white;
-  font-weight: 600;
-  font-size: 1em;
-  font-family: 'Raleway', sans-serif;
-  margin-right: 1em;
 
   &:hover {
     cursor: pointer;
   }
 `
 
+const ButtonsContainer = styled.div`
+  display: flex;
+`
+
+const HeaderButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border:none;
+  color: white;
+  font-weight: 600;
+  font-size: 1em;
+  font-family: 'Raleway', sans-serif;
+  margin-right: 1em;
+  line-height:1.5em;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`
+
 const Header = () => {
 
   const history = useHistory()
+  const token = window.localStorage.getItem("token")
+
+  const logOut = () => {
+    localStorage.removeItem("token")
+    goToHomePage(history)
+  }
 
     return (
     <HeaderContainer>
-      <Logo src={logo}/>
-      <Button>
-      {/* onClick={() => goToLoginPage(history)}> */}
-        <p>Fazer login</p>
-      </Button>
+      <Logo src={logo} onClick={() => goToHomePage(history)}/>
+      
+      {!token && 
+      <ButtonsContainer>
+        {/* <LoginButton onClick = {()=> goToSignUpPage(history)}>
+          Cadastrar
+        </LoginButton> */}
+        <HeaderButton onClick={() => goToLoginPage(history)}>
+          Fazer login<br/> (Área restrita)
+        </HeaderButton>
+      </ButtonsContainer>
+      }
+
+      {token &&
+      <ButtonsContainer>
+        <HeaderButton onClick={() => goToAdminPage(history)}> Painel de controle </HeaderButton>
+        <HeaderButton onClick={logOut}> Log Out </HeaderButton>
+      </ButtonsContainer>
+      }
     </HeaderContainer>
     );
-  }
-
-
-
+}
+ 
 export default Header;

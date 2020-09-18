@@ -1,15 +1,21 @@
 import React from 'react';
 import Router from './router/Router'
-
-import Header from './components/Header'
 import styled from 'styled-components'
 
+
 const AppContainer = styled.div`
-  background-image: url("https://blenderartists.org/uploads/default/original/4X/7/e/2/7e2d7bea4ac21388c4a96e1371f375c4ce00094b.jpg");
+
+  /* background-image: url("https://www.spacex.com/static/images/backgrounds/home_humans-mobile.webp"); 
   background-position: center;
-  background-size:cover;
+  background-size:cover; */
+
+  background-color: #000000;
 
   color: white;
+  
+  display: flex;
+  flex-direction: column;
+
 `
 
 
@@ -17,7 +23,6 @@ function App() {
 
   return (
   <AppContainer>
-    <Header/>
     <Router/>
   </AppContainer>
   );

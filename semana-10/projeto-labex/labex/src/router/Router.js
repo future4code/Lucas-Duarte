@@ -1,11 +1,15 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import HomePage from '../screens/HomePage'
-import LoginPage from '../screens/LoginPage'
-import CreateTripPage from '../screens/CreateTripPage'
-import ApplyToTripPage from '../screens/ApplyToTripPage'
-import AdminPage from '../screens/AdminPage'
+import HomePage from '../screens/HomePage/HomePage'
+import ApplyToTripPage from '../screens/ApplyToTrip/ApplyToTripPage'
+
+import SignUpPage from '../screens/LoginPage/SignUpPage'
+import LoginPage from '../screens/LoginPage/LoginPage'
+
+import AdminPage from '../screens/Admin/AdminPage'
+import CreateTripPage from '../screens/Admin/CreateTripPage'
+import TripDetailsPage from '../screens/Admin/TripDetailsPage'
 
 const Router = () => {
 
@@ -13,12 +17,16 @@ const Router = () => {
         <BrowserRouter>
             <Switch>
 
-                <Route exact path="/inscricao">
+                <Route exact path="/inscricao/:id">
                     <ApplyToTripPage />
                 </Route>
 
                 <Route exact path="/login">
                     <LoginPage />     
+                </Route>
+
+                <Route exact path="/cadastro">
+                    <SignUpPage/>
                 </Route>
 
                 <Route exact path="/adminpage">
@@ -27,6 +35,10 @@ const Router = () => {
 
                 <Route exact path="/criar-viagem">
                     <CreateTripPage />     
+                </Route>
+
+                <Route exact path="/viagem/:id">
+                    <TripDetailsPage/>
                 </Route>
 
                 <Route exact path="/">
