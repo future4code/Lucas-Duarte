@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
+
 
 // ROUTER:
 import { useHistory } from "react-router-dom";
@@ -10,6 +12,12 @@ import { baseUrl } from '../../services/api'
 
 // HOOK:
 import { useForm } from '../../hooks/useForm'
+
+// STYLED:
+import {PageContainer, RedditIcon, Title, Form, Input, Button, Link} from './styled-form'
+
+// Images:
+import redditIcon from '../../assets/img/reddit-icon.svg'
 
 function LoginPage() {
 
@@ -36,7 +44,8 @@ function LoginPage() {
             resetState()
         })
         .catch( (error) => {
-            console.log(error)
+            alert("Cadastro não identificado. Tente novamente!")
+            resetState()
         })
     }
 
@@ -46,30 +55,35 @@ function LoginPage() {
     }
 
     return(
-        <div>
-            <h2>Login</h2>
-            <form onSubmit = {submitForm}>
-                <input
+        <PageContainer>
+            <RedditIcon src={redditIcon}/>
+            <Form onSubmit = {submitForm}>
+            <Title>Sign in</Title>
+
+                <Input
                 name={'email'}
                 value={form.email}
                 onChange = {onChange}
                 placeholder={'Email'}
                 type={'email'}
+                autoFocus
+                required
                 />
 
-                <input
+                <Input
                 name={'password'}
                 value={form.password}
                 onChange = {onChange}
-                placeholder={'Senha'}
+                placeholder={'Password'}
                 type={'password'}
+                required
                 />
 
-                <button>Enviar</button>
+                <Button>Sign In</Button>
 
-                <p>Ou <strong onClick={() => goToSignUp(history) }>cadastre-se</strong></p>
-            </form>
-        </div>
+                <p>New in Labeddit? <Link onClick={() => goToSignUp(history) }>Sign up</Link></p>
+            </Form>
+        </PageContainer>
     )
 }
 

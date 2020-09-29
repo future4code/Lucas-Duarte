@@ -2,7 +2,7 @@ import React from 'react'
 import {Route, Switch} from 'react-router-dom'
 
 import LoginPage from '../screens/LoginPage/LoginPage'
-import SignUpPage from '../screens/SignUpPage/SignUpPage'
+import SignUpPage from '../screens/LoginPage/SignUpPage'
 import FeedPage from '../screens/FeedPage/FeedPage'
 import PostPage from '../screens/PostPage/PostPage'
 import ErrorPage from '../screens/ErrorPage/ErrorPage'

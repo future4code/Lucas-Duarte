@@ -11,6 +11,11 @@ import { baseUrl } from '../../services/api'
 // HOOK:
 import { useForm } from '../../hooks/useForm'
 
+// Styled:
+import {PageContainer, RedditIcon, Title, Form, Input, Button, Link} from './styled-form'
+
+// Images:
+import redditIcon from '../../assets/img/reddit-icon.svg'
 
 function SignUpPage() {
 
@@ -52,33 +57,38 @@ function SignUpPage() {
     }
 
     return(
-        <div>
-            <h2>Cadastro</h2>
-            <p onClick={() => goBack(history)}>Voltar</p>
-            <form onSubmit = {submitForm}>
-                <input
+        <PageContainer>
+            <RedditIcon src={redditIcon}/>
+            <Form onSubmit = {submitForm}>
+                <Title>Sign Up</Title>
+                <Input
                 name={'username'}
                 value={form.username}
                 onChange = {onChange}
-                placeholder={'Nome de usuário'}
+                placeholder={'Username'}
+                required
+                autoFocus
                 />
-                <input
+                <Input
                 name={'email'}
                 value={form.email}
                 onChange = {onChange}
                 placeholder={'Email'}
                 type={'email'}
+                required
                 />
-                <input
+                <Input
                 name={'password'}
                 value={form.password}
                 onChange = {onChange}
-                placeholder={'Senha'}
+                placeholder={'Password'}
                 type={'password'}
+                required
                 />
-                <button>Enviar</button>
-            </form>
-        </div>
+                <Button>Sign Up</Button>
+                <p>Already a Labedditor? <Link onClick={() => goBack(history) }>Sign in</Link></p>
+            </Form>
+        </PageContainer>
     )
 }
 
