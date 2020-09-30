@@ -4,7 +4,7 @@ import {Route, Switch} from 'react-router-dom'
 import LoginPage from '../screens/LoginPage/LoginPage'
 import SignUpPage from '../screens/LoginPage/SignUpPage'
 import FeedPage from '../screens/FeedPage/FeedPage'
-import PostPage from '../screens/PostPage/PostPage'
+import PostPage from '../screens/FeedPage/PostPage'
 import ErrorPage from '../screens/ErrorPage/ErrorPage'
 
 const Router = () => {
@@ -20,9 +20,9 @@ const Router = () => {
             <Route exact path={'/signup'}>
                 <SignUpPage/>
             </Route>
-            {/* <Route exact path={'/:id'}>
+            <Route exact path={'/:id'}>
                 <PostPage/>
-            </Route> */}
+            </Route>
             <Route>
                 <ErrorPage/>
             </Route>

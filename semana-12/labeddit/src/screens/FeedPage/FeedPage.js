@@ -1,11 +1,10 @@
 import React from 'react'
-import styled from 'styled-components'
 import {useLayoutEffect, useState} from 'react'
 import axios from 'axios'
 
 // ROUTER:
 import { useHistory } from 'react-router-dom';
-import { goToLogin } from '../../routes/Coordinator'
+import { goToLogin, goToPost } from '../../routes/Coordinator'
 
 // API:
 import { baseUrl } from '../../services/api'
@@ -19,18 +18,14 @@ import arrowDownSelected from '../../assets/img/arrow-down-selected.svg'
 import arrowUp from '../../assets/img/arrow-up.svg'
 import arrowUpSelected from '../../assets/img/arrow-up-selected.svg'
 import labedditIcon from '../../assets/img/reddit-icon.svg'
+import commentsIcon from '../../assets/img/comments.svg'
 
 // STYLED
-import {PostContainer, ButtonsContainer, ArrowImg, VotesCounter, ContentContainer, LoadingImg, LoadingText} from './Styled'
+import {PageContainer, PostContainer, ButtonsContainer, ArrowImg,VotesCounter, ContentContainer, CreditText, PostTitle, PostText, CommentsContainer, CommentsImg, CommentsLabel} from './Styled'
 
-const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #DAE0E6;
-    min-height: 100vh;
-`
+import {LoadingImg, LoadingText} from '../../styled/loading-styled'
+
+
 
 function FeedPage() {
 
@@ -118,9 +113,34 @@ function FeedPage() {
         createPost()
     } 
 
-    const compare = (a,b) => {
-        return a.createdAt - b.createdAt
+    const timePassed = (createdAt) => {
+        const now = new Date().getTime()
+        const milisseconds = now - createdAt
+        const minutes = milisseconds * 1.6667E-5
+        const hours = Math.floor(milisseconds/(1000 * 60 * 60))
+        const days = Math.floor(hours/24)
+        const months = Math.floor(days/30)
+
+        if (minutes < 1) {
+            return `less than one minute ago`
+        } else if (hours < 1) {
+            return `${Math.ceil(minutes)} minutes ago`
+        } else if (hours === 1) {
+            return `${hours} hour ago`
+        } else if (hours < 24) {
+            return `${hours} hours ago`
+        } else if (days === 1) {
+            return `${days} day ago`
+        } else if (days < 30) {
+            return `${days} days ago`
+        } else if (months === 1) {
+            return `${months} month ago`
+        } else if (months > 1) {
+            return `${months} months ago`
+        }
     }
+
+
 
     if (!allPosts) {
         return (
@@ -172,13 +192,25 @@ function FeedPage() {
                         <ArrowImg src={arrowDown} onClick={() => voteComment(-1, post.id)}/> }
                         </ButtonsContainer>
 
-                        <ContentContainer>
-                        <div>
-                            created by {post.username}
-                        </div>
-                        <h3>{post.title}</h3>
-                        <div>{post.text}</div>
-                        <div>{post.commentsCount} comentários</div>
+                        <ContentContainer onClick={() => goToPost(history, post.id)}>
+                        <CreditText>
+                            Posted by u/{post.username.split(" ").join("")} {timePassed(post.createdAt)}
+                        </CreditText>
+                        <PostTitle>{post.title}</PostTitle>
+                        <PostText>{post.text}</PostText>
+
+                        <CommentsContainer onClick={() => goToPost(history, post.id)}>
+                            <CommentsImg src={commentsIcon}/>
+                            
+                            {(post.commentsCount === 1)?
+                            <CommentsLabel>{post.commentsCount} comment
+                            </CommentsLabel>:
+                            <CommentsLabel>{post.commentsCount} comments
+                            </CommentsLabel>
+                            }
+                            
+                        </CommentsContainer>
+
                         </ContentContainer>
 
                         </PostContainer>

@@ -1,11 +1,12 @@
 import React from 'react'
+import {PageContainer} from './Styled'
 
 function PostPage() {
 
     return(
-        <div>
+        <PageContainer>
             post
-        </div>
+        </PageContainer>
     )
 }
 
