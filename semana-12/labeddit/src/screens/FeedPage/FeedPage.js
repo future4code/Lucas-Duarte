@@ -19,7 +19,6 @@ import {PageContainer, Title, FormContainer, PostForm, InputPostTitle, InputPost
 import {LoadingContainer, LoadingImg, LoadingText} from '../../styled/loading-styled'
 
 
-
 function FeedPage() {
 
     useProtectedPage()
