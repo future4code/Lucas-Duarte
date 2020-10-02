@@ -1,24 +1,30 @@
 import styled from 'styled-components'
 
-export const PageContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #DAE0E6;
-
-    min-height: 100vh;
-    width: 100vw;
-`
-
 export const PostContainer = styled.div`
     display: flex;
     width: 40em;
     min-height: 10em;
-    margin-bottom: 1em;
+    margin-bottom: ${props => {
+        if (props.page === "FeedPage") {
+          return '1em'
+        }
+      }};
 
-    border-radius: 0.5em 0.5em 0.5em 0.5em; 
-    border: 1px solid #CCCCCC;
+      margin-top: ${props => {
+        if (props.page === "FeedPage") {
+          return 'none'
+        } else {
+          return '5em'
+        }
+      }};
+
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+
+    border: ${props => {
+        if (props.page === "FeedPage") {
+          return '1px solid #CCCCCC'
+        }
+      }};
 
     @media(max-width:500px){
       width: 100vw;
@@ -26,8 +32,16 @@ export const PostContainer = styled.div`
     }
 
     &:hover {
-      border: 1px solid #898989;
-      cursor: pointer;
+      border: ${props => {
+        if (props.page === "FeedPage") {
+          return '1px solid #898989'
+        }
+      }};
+      cursor: ${props => {
+        if (props.page === "FeedPage") {
+          return 'pointer'
+        }
+      }};
     }
 `
 
@@ -37,10 +51,24 @@ export const ButtonsContainer = styled.div`
     align-items: center;
     justify-content: center;
 
-    background-color: #F8F9FA;
+    background-color: ${props => {
+        if (props.page === "FeedPage") {
+          return '#F8F9FA'
+        } else {
+          return '#FFFFFF';
+        }
+      }};
+
     min-width: 2.5em;
     
-    border-radius: 0.5em 0 0 0.5em;
+    border-radius: ${props => {
+        if (props.page === "FeedPage") {
+          return '0.5em 0 0 0.5em'
+        } else {
+          return '0.5em 0 0 0'
+        }
+      }};
+
     border: none;
 
 `
@@ -54,7 +82,14 @@ export const ContentContainer = styled.div`
     background-color: #FFFFFF;
     padding-left: 1em;
     padding-right: 0.5em;
-    border-radius: 0em 0.5em 0.5em 0; 
+    border-radius: ${props => {
+        if (props.page === "FeedPage") {
+          return '0 0.5em 0.5em 0'
+        } else {
+          return '0 0.5em 0 0'
+        }
+      }};
+
     border: none;
 `
 
@@ -121,4 +156,3 @@ export const ArrowImg = styled.img`
 export const VotesCounter = styled.div`
   font-weight: 600;
 `
-

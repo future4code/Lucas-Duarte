@@ -17,13 +17,20 @@ const heartbeat = keyframes`
 }
 `
 
+export const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5em;
+`
+
 export const LoadingImg = styled.img`
     height: 3em;
     animation: ${heartbeat} 1s infinite;
 `
 
 export const LoadingText = styled.div`
-    color: #FD9024;
+    color: #FF4500;
     font-weight: 600;
     font-size: 0.8em;
     margin-top: 1em;

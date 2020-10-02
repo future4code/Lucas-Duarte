@@ -1,23 +1,26 @@
 import React from 'react'
-import axios from 'axios'
 
 // ROUTER:
 import { useHistory } from "react-router-dom";
-import { goToFeed, goBack } from '../../routes/Coordinator'
+import { goToFeed, goToLogin } from '../../routes/Coordinator'
 
 // API:
+import axios from 'axios'
 import { baseUrl } from '../../services/api'
 
-// HOOK:
-import { useForm } from '../../hooks/useForm'
+// HOOKS:
+import useForm from '../../hooks/useForm'
+import useUnprotectedPage from '../../hooks/useUnprotectedPages'
 
-// Styled:
+// STYLED:
 import {PageContainer, RedditIcon, Title, Form, Input, Button, Link} from './styled-form'
 
-// Images:
+// IMAGES:
 import redditIcon from '../../assets/img/reddit-icon.svg'
 
 function SignUpPage() {
+
+    useUnprotectedPage()
 
     const history = useHistory()
 
@@ -40,6 +43,7 @@ function SignUpPage() {
 
         .then( (response) => {
             localStorage.setItem("token", response.data.token)
+            localStorage.setItem("username", response.data.user.username)
             goToFeed(history)
             resetState()
         })
@@ -86,7 +90,7 @@ function SignUpPage() {
                 required
                 />
                 <Button>Sign Up</Button>
-                <p>Already a Labedditor? <Link onClick={() => goBack(history) }>Sign in</Link></p>
+                <p>Already a Labedditor? <Link onClick={() => goToLogin(history) }>Sign in</Link></p>
             </Form>
         </PageContainer>
     )

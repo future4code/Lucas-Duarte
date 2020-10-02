@@ -1,17 +1,19 @@
 import React from 'react'
-import axios from 'axios'
-import styled from 'styled-components'
-
 
 // ROUTER:
 import { useHistory } from "react-router-dom";
 import { goToFeed, goToSignUp } from '../../routes/Coordinator'
 
+// FUNCTIONS:
+import postData from '../../functions/postData'
+
 // API:
+import axios from 'axios'
 import { baseUrl } from '../../services/api'
 
 // HOOK:
-import { useForm } from '../../hooks/useForm'
+import useForm from '../../hooks/useForm'
+import useUnprotectedPage from '../../hooks/useUnprotectedPages'
 
 // STYLED:
 import {PageContainer, RedditIcon, Title, Form, Input, Button, Link} from './styled-form'
@@ -20,6 +22,8 @@ import {PageContainer, RedditIcon, Title, Form, Input, Button, Link} from './sty
 import redditIcon from '../../assets/img/reddit-icon.svg'
 
 function LoginPage() {
+
+    useUnprotectedPage()
 
     const history = useHistory()
 
@@ -39,7 +43,10 @@ function LoginPage() {
         .post(`${baseUrl}/login`, body)
 
         .then ( (response) => {
+            console.log(response.data)
             localStorage.setItem("token", response.data.token)
+            localStorage.setItem("username", response.data.user.username)
+
             goToFeed(history)
             resetState()
         })
