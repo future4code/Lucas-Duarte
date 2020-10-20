@@ -1,0 +1,20 @@
+{
+  "name": "aula2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "ex2": "tsc && node ./build/exercicio2.js",
+    "ex3": "tsc && node ./build/exercicio3.js",
+    "ex5": "tsc && node ./build/exercicio5.js",
+    "ex6": "tsc && node ./build/exercicio6.js",
+    "ex7": "tsc && node ./build/exercicio7.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.0"
+  }
+}
