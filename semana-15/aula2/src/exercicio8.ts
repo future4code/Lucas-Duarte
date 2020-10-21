@@ -22,8 +22,11 @@ let produtos: prato[] = [
 
 let vendas: venda[] = [
     {prato: "Coxinha vegana", cliente: "Rob"},
+    {prato: "Coxinha vegana", cliente: "Parry"},
+    {prato: "Coxinha vegana", cliente: "Parry"},
+    {prato: "Coxinha vegana", cliente: "Ugo"},
+    {prato: "Coxinha vegana", cliente: "Laila"},
     {prato: "Hambúrguer de soja", cliente: "Sheila"},
-    {prato: "Cachorro quente", cliente: "Vânia"}
 ]
 
 // FUNÇÕES
@@ -55,9 +58,42 @@ function achaPreco (nome: string): number | undefined {
     return produtoEscolhido.preco
 }
 
+function achaCusto (nome: string): number | undefined {
+    
+    if (nome === undefined) {
+        return
+    }
 
-console.log(achaPreco("Hambúrguer de soja"))
+    const produtoEscolhido = produtos.find(
+        (produto: prato)  => {
+            return produto.nome === nome
+        }
+    )
 
-//
+    if (!produtoEscolhido) {
+        return
+    }
+
+    return produtoEscolhido.custo
+}
+
+function determinaLucro (vendas: venda[]):number {
+    const listaDeLucro: number[] = vendas.map( (venda) => {
+        return Number(achaPreco(venda.prato)) - Number(achaCusto(venda.prato))
+    })
+
+    let lucro = 0
+
+    for (let i = 0; i < listaDeLucro.length; i++) {
+        lucro += Number(listaDeLucro[i])
+    }
+
+    return lucro
+}
+
+console.log(determinaLucro(vendas))
+
+// console.log(achaPreco("Hambúrguer de soja"))
+
 
 
