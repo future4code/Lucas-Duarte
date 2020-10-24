@@ -19,9 +19,13 @@ export const users: account[] = [
     birthDate: "04/03/1993",
     balance: 900,
     bankStatement: [
-      { value: 5, date: "23/10/2020", description: "comprei coxinha" },
-      { value: 90, date: "23/10/2020", description: "jantei no almanara" },
-      { value: 500, date: "23/10/2020", description: "comprei caixinha de som" }
+      { value: 50, date: "23/10/2020", description: "jantei no almanara" },
+      {
+        value: 400,
+        date: "23/10/2020",
+        description: "comprei caixinha de som"
+      },
+      { value: 100, date: "25/10/2020", description: "comprei coxinha" }
     ]
   },
   {

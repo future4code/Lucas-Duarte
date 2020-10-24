@@ -4,6 +4,13 @@ import { AddressInfo } from "net";
 
 import { users, account, transaction } from "./data";
 import { determineAge, findUser, isPastDay, getTodayDate } from "./functions";
+import {
+  validateAuthentication,
+  validateUser,
+  checkIfCpfAlreadyExists,
+  checkIfIsUnderage,
+  checkIfSufficientBalance
+} from "./errors";
 
 const app = express();
 app.use(express.json());
@@ -20,39 +27,38 @@ app.get("/users", (req: Request, res: Response): void => {
 
 // CONSULTAR SALDO DE USUÁRIO
 app.get("/users/balance", (req: Request, res: Response): void => {
-  let errorMessage: string = "Erro ao consultar seu saldo";
-
   try {
-    const { name, cpf } = req.query;
+    validateAuthentication(req.query);
 
-    if (!name || !cpf) {
-      errorMessage = "Passe seu nome e CPF para consultar o saldo";
-      throw new Error();
-    }
-
-    const user: account | undefined = findUser(String(name), String(cpf));
-
-    if (!user) {
-      errorMessage = "Não encontramos sua conta!";
-      throw new Error();
-    }
+    const user: account = findUser(
+      String(req.query.name),
+      String(req.query.cpf)
+    )!;
 
     const balance: number = user.balance;
     const response = { balance };
 
     res.status(200).send(response);
   } catch (error) {
-    res.status(400).send(errorMessage);
+    res.status(400).send(error.message);
   }
 });
 
 // CRIAR CONTA
 app.post("/users/create", (req: Request, res: Response): void => {
-  let errorMessage: string = "Erro ao criar nova conta!";
-
   try {
     const { name, cpf, birthDate } = req.body;
+
+    if (!name || !cpf || !birthDate) {
+      throw new Error("Envie nome, cpf e data de nascimento!");
+    }
+
+    checkIfCpfAlreadyExists(cpf);
+
     const age: number = determineAge(birthDate);
+
+    checkIfIsUnderage(age);
+
     const user: account = {
       name,
       cpf,
@@ -61,97 +67,34 @@ app.post("/users/create", (req: Request, res: Response): void => {
       bankStatement: []
     };
 
-    const cpfAlreadyExists = users.some(user => user.cpf === cpf);
-
-    if (!name || !cpf || !birthDate) {
-      errorMessage = "Envie nome, cpf e data de nascimento!";
-      throw new Error();
-    }
-
-    if (cpfAlreadyExists) {
-      errorMessage = "CPF já existe!";
-      throw new Error();
-    }
-
-    if (age < 18) {
-      errorMessage = "Não aceitamos menores de idade!";
-      throw new Error();
-    }
-
     users.push(user);
+
     res.status(200).send("Usuário criado com sucesso!");
   } catch (error) {
-    res.status(400).send(errorMessage);
-  }
-});
-
-// ADICIONAR SALDO
-app.put("/users/balance", (req: Request, res: Response): void => {
-  let errorMessage: string = "Erro ao adicionar o saldo!";
-
-  try {
-    const { name, cpf } = req.query;
-    const { balance } = req.body;
-
-    if (!name || !cpf) {
-      errorMessage = "Envie seu nome e CPF para alterar seu saldo";
-      throw new Error();
-    }
-
-    if (!balance) {
-      errorMessage = "Envie seu saldo";
-      throw new Error();
-    }
-
-    const user: account | undefined = findUser(String(name), String(cpf));
-
-    if (!user) {
-      errorMessage = "Não encontramos sua conta!";
-      throw new Error();
-    }
-
-    user.balance = balance;
-
-    res.status(200).send("Seu saldo foi atualizado com sucesso!");
-  } catch (error) {
-    res.status(400).send(errorMessage);
+    res.status(400).send(error.message);
   }
 });
 
 // PAGAR CONTA
-
 app.post("/users/pay", (req: Request, res: Response): void => {
-  let errorMessage: string = "Erro ao pagar conta!";
-
   try {
-    const { name, cpf } = req.query;
+    validateAuthentication(req.query);
+
     const { value, description } = req.body;
 
-    if (!name || !cpf) {
-      errorMessage = "Envie seu nome e CPF para pagar uma conta";
-      throw new Error();
-    }
-
-    const user: account | undefined = findUser(String(name), String(cpf));
-
-    if (!user) {
-      errorMessage = "Não encontramos sua conta!";
-      throw new Error();
-    }
-
     if (!value || !description) {
-      errorMessage = "Envie o valor, a data de pagamento e a descrição!";
-      throw new Error();
+      throw new Error("Envie o valor, a data de pagamento e a descrição!");
     }
 
-    if (value > user.balance) {
-      errorMessage = "Seu saldo é insuficiente para essa transação!";
-      throw new Error();
-    }
+    const user: account = findUser(
+      String(req.query.name),
+      String(req.query.cpf)
+    )!;
+
+    checkIfSufficientBalance(value, user);
 
     if (req.body.date && isPastDay(req.body.date)) {
-      errorMessage = "Não é possível pagar uma conta de um dia que já foi!";
-      throw new Error();
+      throw new Error("Não é possível pagar uma conta de um dia que já foi!");
     }
 
     const transaction: transaction = {
@@ -166,60 +109,103 @@ app.post("/users/pay", (req: Request, res: Response): void => {
 
     res.status(200).send("Conta paga!");
   } catch (error) {
-    res.status(400).send(errorMessage);
+    res.status(400).send(error.message);
+  }
+});
+
+// DEPOSITAR DINHEIRO
+app.put("/users/balance", (req: Request, res: Response): void => {
+  try {
+    validateAuthentication(req.query);
+
+    const { value } = req.body;
+
+    if (!value) {
+      throw new Error("Envie seu saldo");
+    }
+
+    const user: account = findUser(
+      String(req.query.name),
+      String(req.query.cpf)
+    )!;
+
+    user.balance += value;
+
+    const transaction: transaction = {
+      value: value,
+      date: getTodayDate(),
+      description: "Depósito de dinheiro"
+    };
+
+    const bankStatement: transaction[] = user.bankStatement;
+    bankStatement.push(transaction);
+
+    res.status(200).send("Seu saldo foi atualizado com sucesso!");
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+});
+
+// ATUALIZAR SALDO
+
+app.put("/users/update-balance", (req: Request, res: Response): void => {
+  try {
+    validateAuthentication(req.query);
+
+    const user: account = findUser(
+      String(req.query.name),
+      String(req.query.cpf)
+    )!;
+
+    const bankStatement: transaction[] = user.bankStatement;
+
+    for (let i = 0; i < bankStatement.length; i++) {
+      if (isPastDay(bankStatement[i].date)) {
+        user.balance -= bankStatement[i].value;
+      }
+    }
+
+    res.status(200).send("Saldo atualizado!");
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 });
 
 // TRANSFERÊNCIA INTERNA
-
 app.put("/transfer", (req: Request, res: Response): void => {
-  let errorMessage = "Não foi possível realizar a transferência";
-
   try {
-    const { name, cpf } = req.query;
+    validateAuthentication(req.query);
+
     const receiverName = req.body.name;
     const receiverCpf = req.body.cpf;
     const transferValue = req.body.value;
 
-    if (!name || !cpf) {
-      errorMessage = "Envie seu nome e CPF para fazer a transferência";
-      throw new Error();
-    }
-
-    const user: account | undefined = findUser(String(name), String(cpf));
-
-    if (!user) {
-      errorMessage = "Não encontramos sua conta!";
-      throw new Error();
-    }
-
-    if (transferValue > user.balance) {
-      errorMessage = "Seu saldo é insuficiente para essa transferência!";
-      throw new Error();
-    }
-
     if (!receiverName || !receiverCpf || !transferValue) {
-      errorMessage =
-        "Envie o valor, o nome e o CPF do destinatário da transferência";
-      throw new Error();
+      throw new Error(
+        "Envie o valor, o nome e o CPF do destinatário da transferência"
+      );
     }
 
-    const receiver: account | undefined = findUser(
+    const user: account = findUser(
+      String(req.query.name),
+      String(req.query.cpf)
+    )!;
+
+    checkIfSufficientBalance(transferValue, user);
+
+    const receiver: account = findUser(
       String(receiverName),
       String(receiverCpf)
-    );
+    )!;
 
-    if (!receiver) {
-      errorMessage = "Não encontramos a conta do destinatário!";
-      throw new Error();
-    }
+    validateUser(receiver);
 
     receiver.balance += transferValue;
     user.balance -= transferValue;
 
     res.status(200).send("Transferência realizada com sucesso");
   } catch (error) {
-    res.status(400).send(errorMessage);
+    res.status(400).send(error.message);
   }
 });
 

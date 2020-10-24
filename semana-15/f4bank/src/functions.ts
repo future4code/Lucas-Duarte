@@ -1,6 +1,7 @@
-import { users, account, transaction } from "./data";
+import { users, account } from "./data";
 
-// - - - - - DATA - - - - -
+// - - - - - DATAS - - - - -
+
 export function getTodayDate(): string {
   const todayDate: Date = new Date();
   const month: number = todayDate.getUTCMonth() + 1;
@@ -46,6 +47,7 @@ export function isPastDay(dateAsString: string): boolean {
 }
 
 // - - - - - USER - - - - -
+
 export function findUser(name: string, cpf: string): account | undefined {
   const user: account | undefined = users.find(
     user =>
