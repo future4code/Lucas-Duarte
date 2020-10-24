@@ -15,13 +15,22 @@ export type transaction = {
 export const users: account[] = [
   {
     name: "Lucas",
-    cpf: 41983808805,
+    cpf: 41983808806,
     birthDate: "04/03/1993",
     balance: 900,
     bankStatement: [
       { value: 5, date: "23/10/2020", description: "comprei coxinha" },
       { value: 90, date: "23/10/2020", description: "jantei no almanara" },
       { value: 500, date: "23/10/2020", description: "comprei caixinha de som" }
+    ]
+  },
+  {
+    name: "Natalia",
+    cpf: 41983808805,
+    birthDate: "08/03/1993",
+    balance: 200,
+    bankStatement: [
+      { value: 90, date: "23/10/2020", description: "jantei no almanara" }
     ]
   }
 ];

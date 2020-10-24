@@ -170,6 +170,59 @@ app.post("/users/pay", (req: Request, res: Response): void => {
   }
 });
 
+// TRANSFERÊNCIA INTERNA
+
+app.put("/transfer", (req: Request, res: Response): void => {
+  let errorMessage = "Não foi possível realizar a transferência";
+
+  try {
+    const { name, cpf } = req.query;
+    const receiverName = req.body.name;
+    const receiverCpf = req.body.cpf;
+    const transferValue = req.body.value;
+
+    if (!name || !cpf) {
+      errorMessage = "Envie seu nome e CPF para fazer a transferência";
+      throw new Error();
+    }
+
+    const user: account | undefined = findUser(String(name), String(cpf));
+
+    if (!user) {
+      errorMessage = "Não encontramos sua conta!";
+      throw new Error();
+    }
+
+    if (transferValue > user.balance) {
+      errorMessage = "Seu saldo é insuficiente para essa transferência!";
+      throw new Error();
+    }
+
+    if (!receiverName || !receiverCpf || !transferValue) {
+      errorMessage =
+        "Envie o valor, o nome e o CPF do destinatário da transferência";
+      throw new Error();
+    }
+
+    const receiver: account | undefined = findUser(
+      String(receiverName),
+      String(receiverCpf)
+    );
+
+    if (!receiver) {
+      errorMessage = "Não encontramos a conta do destinatário!";
+      throw new Error();
+    }
+
+    receiver.balance += transferValue;
+    user.balance -= transferValue;
+
+    res.status(200).send("Transferência realizada com sucesso");
+  } catch (error) {
+    res.status(400).send(errorMessage);
+  }
+});
+
 // - - - - - - - - - - SERVIDOR - - - - - - - - - - //
 
 const server = app.listen(process.env.PORT || 3003, () => {
