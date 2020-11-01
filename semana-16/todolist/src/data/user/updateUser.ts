@@ -12,7 +12,7 @@ export async function updateUser(
         name: `${name}`,
         nickname: `${nickname}`
       })
-      .into("UserToDoList");
+      .into("ToDoListUser");
   } catch (error) {
     throw new Error("We couldn't edit the user. Try again later.");
   }

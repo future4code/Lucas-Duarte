@@ -12,7 +12,7 @@ export async function insertIntoUser(
         nickname,
         email
       })
-      .into("UserToDoList");
+      .into("ToDoListUser");
   } catch (error) {
     throw new Error("We couldn't create a new user. Try again later.");
   }

@@ -12,11 +12,11 @@ export async function insertIntoTask(
       .insert({
         title,
         description,
-        limit_date: convertDateFormatToDatabase(limitDate),
+        limitDate: convertDateFormatToDatabase(limitDate),
         status: "to do",
         user_id: userId
       })
-      .into("Task");
+      .into("ToDoListTask");
   } catch (error) {
     throw new Error("We couldn't create a new task. Try again later.");
   }

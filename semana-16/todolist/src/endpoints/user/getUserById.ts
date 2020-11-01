@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { selectUserWhereId } from "../../data/user/selectUserWhereId";
+import { selectUserWhereIdIs } from "../../data/user/selectUsers";
 import { checkForUserId } from "../../functions/validateUser";
 import { User } from "../../types";
 
@@ -8,7 +8,7 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
     const { id }: any = req.params;
     await checkForUserId(id);
 
-    const userById: User = await selectUserWhereId(id);
+    const userById: User = await selectUserWhereIdIs(id);
 
     const user = {
       id: userById.id,

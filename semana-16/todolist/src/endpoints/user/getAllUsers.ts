@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../../types";
-import { selectAllUsers } from "../../data/user/selectAllUsers";
+import { selectAllUsers } from "../../data/user/selectUsers";
 
 export async function getAllUsers(req: Request, res: Response) {
   try {
