@@ -6,6 +6,7 @@ import { AddressInfo } from "net";
 import createUser from "./endpoints/createUser";
 import getUserByEmail from "./endpoints/getUserByEmail";
 import login from "./endpoints/login";
+import getUserById from "./endpoints/getUserById";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/user", getUserByEmail);
+app.get("/user/profile", getUserById);
 app.post("/user/signup", createUser);
 app.put("/user/login", login);
 
