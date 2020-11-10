@@ -3,6 +3,7 @@ import knex from "knex";
 import cors from "cors";
 import dotenv from "dotenv";
 import { AddressInfo } from "net";
+
 import { getAllUsers } from "./endpoints/getAllUsers";
 import { searchByName } from "./endpoints/searchByName";
 import { searchByType } from "./endpoints/searchByType";
@@ -17,7 +18,7 @@ export const connection = knex({
     host: process.env.DB_HOST,
     port: 3306,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    password: process.env.DB_PASS,
     database: process.env.DB_NAME
   }
 });
