@@ -1,0 +1,65 @@
+import { Character } from "../src/characters";
+import validateCharacter from "../src/validateCharacter";
+
+describe("Testing validateCharacter()", () => {
+  test("Should return false for empty name", () => {
+    const result = validateCharacter({
+      name: "",
+      life: 8,
+      strength: 8,
+      defense: 8
+    });
+
+    expect(result).toBe(false);
+  });
+
+  test("Should return false for life 0", () => {
+    const result = validateCharacter({
+      name: "Ken",
+      life: 0,
+      strength: 10,
+      defense: 10
+    });
+    expect(result).toBe(false);
+  });
+
+  test("Should return false for strength 0", () => {
+    const result = validateCharacter({
+      name: "Ken",
+      life: 10,
+      strength: 0,
+      defense: 10
+    });
+    expect(result).toBe(false);
+  });
+
+  test("Should return false for defense 0", () => {
+    const result = validateCharacter({
+      name: "Ken",
+      life: 10,
+      strength: 10,
+      defense: 0
+    });
+    expect(result).toBe(false);
+  });
+
+  test("Should return false for negative values", () => {
+    const result = validateCharacter({
+      name: "Ken",
+      life: -10,
+      strength: 10,
+      defense: -2
+    });
+    expect(result).toBe(false);
+  });
+
+  test("Should return false for negative values", () => {
+    const result = validateCharacter({
+      name: "Ken",
+      life: 10,
+      strength: 10,
+      defense: 4
+    });
+    expect(result).toBe(true);
+  });
+});
